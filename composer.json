@@ -1,0 +1,50 @@
+{
+    "name": "xpressengine-plugin/banner",
+    "description": "This Package is Xpressengine Plugin - Banner.",
+    "keywords": [
+        "xpressengine",
+        "plugin",
+        "banner",
+        "widget"
+    ],
+    "license": "LGPL-2.1",
+    "version": "0.9.0",
+    "type": "xpressengine-plugin",
+    "support": {
+        "email": "developers@xpressengine.com"
+    },
+    "authors": [
+        {
+            "name": "XE Developers",
+            "email": "developers@xpressengine.com",
+            "homepage": "http://xpressengine.io",
+            "role": "Developer"
+        }
+    ],
+    "extra": {
+        "xpressengine": {
+            "title": "Banner",
+            "component": {
+                "widget/banner@widget": {
+                    "class": "\\Xpressengine\\Plugins\\Banner\\Widgets\\Widget",
+                    "name": "배너 위젯",
+                    "description": "미리 편집된 배너를 출력합니다."
+                },
+                "widget/banner@widget/skin/banner@widgetskin": {
+                    "class": "Xpressengine\\Plugins\\Banner\\Skins\\WidgetSkin",
+                    "name": "Banner 기본 위젯 스킨",
+                    "description": "The Skin supported by Banner plugin."
+                }
+            }
+        }
+    },
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Xpressengine\\Plugins\\Banner\\": "src/"
+        },
+        "classmap": [
+            "skins/widget/WidgetSkin.php"
+        ]
+    }
+}
