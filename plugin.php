@@ -223,4 +223,17 @@ class Plugin extends AbstractPlugin
 
         return parent::checkUpdated();
     }
+
+    /**
+     * 플러그인의 설정페이지 주소를 반환한다.
+     * 플러그인 목록에서 플러그인의 '관리' 버튼을 누를 경우 이 페이지에서 반환하는 주소로 연결된다.
+     *
+     * @return string
+     */
+    public function getSettingsURI()
+    {
+        return route('banner::group.index');
+    }
+
+
 }

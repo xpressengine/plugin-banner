@@ -1,5 +1,5 @@
 @section('page_title')
-    <h2><a href="{{ route('point::setting.index') }}"><i class="xi-arrow-left"></i>배너 그룹</a></h2>
+    <h2><a href="{{ route('banner::group.index') }}"><i class="xi-arrow-left"></i>배너 그룹</a></h2>
 @stop
 
 <div class="row">
