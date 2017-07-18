@@ -83,7 +83,7 @@ class Handler
         $item->title = 'untitled';
 
         foreach ($attrs as $key => $value) {
-            $item->{$key} = $attr;
+            $item->{$key} = $value;
         }
         $item->save();
         return $item;

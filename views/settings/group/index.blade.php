@@ -1,5 +1,5 @@
 @section('page_title')
-    <h2><a href="{{ route('banner::group.index') }}"><i class="xi-arrow-left"></i>배너 그룹</a></h2>
+    <h2><a href="{{ route('banner::group.index') }}"><i class="xi-arrow-left"></i>배너 목록</a></h2>
 @stop
 
 <div class="row">
@@ -9,11 +9,11 @@
                 <div class="panel-heading">
                     <div class="pull-left">
                         <h3 class="panel-title">
-                            생성된 배너그룹 목록
+                            생성된 배너 목록
                         </h3>
                     </div>
                     <div class="pull-right">
-                        <a href="{{ route('banner::group.create') }}" class="xe-btn xe-btn-primary" data-toggle="xe-page-modal">새 그룹 생성</a>
+                        <a href="{{ route('banner::group.create') }}" class="xe-btn xe-btn-primary" data-toggle="xe-page-modal">새 배너 생성</a>
                     </div>
                 </div>
                 <div class="table-responsive">
