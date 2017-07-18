@@ -28,7 +28,7 @@
                 "widget/banner@widget": {
                     "class": "\\Xpressengine\\Plugins\\Banner\\Widgets\\Widget",
                     "name": "배너 위젯",
-                    "description": "미리 편집된 배너를 출력합니다."
+                    "description": "편하고 자유롭게 배너를 편집할 수 있고, 편집한 배너를 위젯으로 어디든 출력할 수 있습니다. 또 원하는 시간을 지정하여 출력할 수 있습니다."
                 },
                 "widget/banner@widget/skin/banner@widgetskin": {
                     "class": "Xpressengine\\Plugins\\Banner\\Skins\\WidgetSkin",
