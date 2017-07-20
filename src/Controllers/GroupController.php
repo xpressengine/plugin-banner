@@ -42,6 +42,10 @@ class GroupController extends Origin
     public function index(Handler $handler)
     {
         $groups = $handler->getGroups();
+
+        app('xe.frontend')->js('assets/core/xe-ui-component/js/xe-page.js')->load();
+        app('xe.frontend')->js('assets/core/xe-ui-component/js/xe-form.js')->load();
+
         return app('xe.presenter')->make($this->plugin->view('views.settings.group.index'), compact('groups'));
     }
 
