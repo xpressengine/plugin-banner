@@ -15,13 +15,11 @@ class Plugin extends AbstractPlugin
      */
     public function register()
     {
-        app()->singleton(
-            ['banner::handler' => Handler::class],
-            function ($app) {
-                $proxyClass = app('xe.interception')->proxy(Handler::class, 'Banner');
-                return new $proxyClass($this);
-            }
-        );
+        app()->singleton(Handler::class, function ($app) {
+            $proxyClass = app('xe.interception')->proxy(Handler::class, 'Banner');
+            return new $proxyClass($this);
+        });
+        app()->alias(Handler::class, 'banner::handler');
     }
 
 
