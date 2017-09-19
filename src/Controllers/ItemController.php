@@ -79,7 +79,7 @@ class ItemController extends Origin
             $inputs['ended_at'] = $ed.' '.($et ?: '00:00').':00';
         }
 
-        if ($inputs['link_target'] === null) {
+        if (array_get($inputs, 'link_target') === null) {
             $inputs['link_target'] = '_self';
         }
 
