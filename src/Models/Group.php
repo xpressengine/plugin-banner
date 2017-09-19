@@ -29,20 +29,7 @@ class Group extends DynamicModel
 
     public $incrementing = false;
 
-    const CREATED_AT = 'createdAt';
-    const UPDATED_AT = 'updatedAt';
-
     public $timestamps = true;
-
-    //protected $casts = [];
-
-    //protected $dates = [
-    //    'startedAt',
-    //    'endedAt'
-    //];
-
-    //protected $fillable = [
-    //];
 
     public function items()
     {

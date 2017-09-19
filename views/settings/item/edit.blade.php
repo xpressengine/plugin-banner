@@ -29,19 +29,19 @@
             <div class="row">
                 <div class="col-xs-12"><label for="">노출 시작 일시</label></div>
                 <div class="col-md-6">
-                    {{ uio('formText', ['name'=>'startedAtDate', 'type'=>'date', 'value'=>($item->startedAt ? $item->startedAt->format('Y-m-d') : '1970-01-01')]) }}
+                    {{ uio('formText', ['name'=>'started_at_date', 'type'=>'date', 'value'=>($item->started_at ? $item->started_at->format('Y-m-d') : '1970-01-01')]) }}
                 </div>
                 <div class="col-md-6">
-                    {{ uio('formText', ['name'=>'startedAtTime', 'type'=>'time', 'value'=>($item->startedAt ? $item->startedAt->format('H:i') : $item->createdAt->format('H:i'))]) }}
+                    {{ uio('formText', ['name'=>'started_at_time', 'type'=>'time', 'value'=>($item->started_at ? $item->started_at->format('H:i') : $item->created_at->format('H:i'))]) }}
                 </div>
             </div>
             <div class="row">
                 <div class="col-xs-12"><label for="">노출 종료 일시</label></div>
                 <div class="col-md-6">
-                    {{ uio('formText', ['name'=>'endedAtDate', 'type'=>'date', 'value'=>($item->endedAt ? $item->endedAt->format('Y-m-d') : '2038-01-19')]) }}
+                    {{ uio('formText', ['name'=>'ended_at_date', 'type'=>'date', 'value'=>($item->ended_at ? $item->ended_at->format('Y-m-d') : '2038-01-19')]) }}
                 </div>
                 <div class="col-md-6">
-                    {{ uio('formText', ['name'=>'endedAtTime', 'type'=>'time', 'value'=>($item->endedAt ? $item->endedAt->format('H:i') : '00:00')]) }}
+                    {{ uio('formText', ['name'=>'ended_at_time', 'type'=>'time', 'value'=>($item->ended_at ? $item->ended_at->format('H:i') : '00:00')]) }}
                 </div>
             </div>
         </div>

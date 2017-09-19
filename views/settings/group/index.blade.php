@@ -31,7 +31,7 @@
                             <tr>
                                 <td>{{ $group->title }}</td>
                                 <td>{{ $group->item_count }}</td>
-                                <td>{{ $group->createdAt->format('Y.m.d H:i:s') }}</td>
+                                <td>{{ $group->created_at->format('Y.m.d H:i:s') }}</td>
                                 <td>
                                     <a class="xe-btn xe-btn-xs xe-btn-default"
                                        onclick="window.open(this.href, 'bannerEditor', 'directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no');return false"

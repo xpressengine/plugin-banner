@@ -187,8 +187,8 @@ class Handler
                 $query->where('use_timer', 0)
                 ->orWhere(function($query) {
                     $now = Carbon::now();
-                    $query->where('endedAt', '>', $now);
-                    $query->where('startedAt', '<', $now);
+                    $query->where('ended_at', '>', $now);
+                    $query->where('started_at', '<', $now);
                 });
             });
         }
@@ -197,6 +197,6 @@ class Handler
             $query->take($count);
         }
 
-        return $query->orderBy('order', 'desc')->orderBy('createdAt','desc')->get();
+        return $query->orderBy('order', 'desc')->orderBy('created_at','desc')->get();
     }
 }

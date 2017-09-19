@@ -163,10 +163,10 @@ class Plugin extends AbstractPlugin
                     $table->string('status', 100);
                     $table->integer('order')->default(0);
                     $table->boolean('use_timer')->default(false);
-                    $table->timestamp('startedAt')->nullable();
-                    $table->timestamp('endedAt')->nullable();
-                    $table->timestamp('createdAt');
-                    $table->timestamp('updatedAt');
+                    $table->timestamp('started_at')->nullable();
+                    $table->timestamp('ended_at')->nullable();
+                    $table->timestamp('created_at');
+                    $table->timestamp('updated_at');
                     $table->index('group_id', 'order');
                 }
             );
@@ -181,8 +181,8 @@ class Plugin extends AbstractPlugin
                     $table->string('id', 36)->primary();
                     $table->string('title')->unique();
                     $table->string('skin', 1000);
-                    $table->timestamp('createdAt');
-                    $table->timestamp('updatedAt');
+                    $table->timestamp('created_at');
+                    $table->timestamp('updated_at');
                 }
             );
         }

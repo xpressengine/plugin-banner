@@ -67,16 +67,16 @@ class ItemController extends Origin
     {
         $inputs = $request->only(['title', 'image', 'content', 'status', 'use_timer', 'link', 'link_target']);
 
-        $sd = $request->get('startedAtDate');
-        $st = $request->get('startedAtTime');
-        $ed = $request->get('endedAtDate');
-        $et = $request->get('endedAtTime');
+        $sd = $request->get('started_at_date');
+        $st = $request->get('started_at_time');
+        $ed = $request->get('ended_at_date');
+        $et = $request->get('ended_at_time');
 
         if ($sd) {
-            $inputs['startedAt'] = $sd.' '.($st ?: '00:00').':00';
+            $inputs['started_at'] = $sd.' '.($st ?: '00:00').':00';
         }
         if ($ed) {
-            $inputs['endedAt'] = $ed.' '.($et ?: '00:00').':00';
+            $inputs['ended_at'] = $ed.' '.($et ?: '00:00').':00';
         }
 
         if ($inputs['link_target'] === null) {

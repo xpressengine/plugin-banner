@@ -30,23 +30,15 @@ class Item extends DynamicModel
 
     public $incrementing = false;
 
-    const CREATED_AT = 'createdAt';
-    const UPDATED_AT = 'updatedAt';
-
     public $timestamps = true;
 
     protected $casts = [
         'order' => 'integer',
         'image' => 'array',
         'use_timer' => 'boolean',
-        'startedAt' => 'date',
-        'endedAt' => 'date'
+        'started_at' => 'date',
+        'ended_at' => 'date'
     ];
-
-    //protected $dates = [
-    //    'startedAt',
-    //    'endedAt'
-    //];
 
     protected $fillable = [
         'order'
@@ -117,7 +109,7 @@ class Item extends DynamicModel
         if ($time === null) {
             $time = Carbon::now();
 
-            if ($time->gte($this->startedAt) && $time->lte($this->endedAt)) {
+            if ($time->gte($this->started_at) && $time->lte($this->ended_at)) {
                 return true;
             } else {
                 return false;
