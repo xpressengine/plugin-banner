@@ -141,8 +141,8 @@ class Handler
         // save new file
         $file = app('xe.storage')->create(
             $img->encode()->getEncoded(),
-            "public/plugin/banner/{$item->group_id}/{$item->id}",
-            'image'
+            "public/plugin/banner/{$item->group_id}",
+            hash('sha1', $item->id)
         );
         app('xe.storage')->bind($item->id, $file);
 
