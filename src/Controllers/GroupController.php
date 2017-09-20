@@ -51,7 +51,7 @@ class GroupController extends Origin
 
     public function create()
     {
-        return apiRender($this->plugin->view('views.settings.group.create'));
+        return api_Render($this->plugin->view('views.settings.group.create'));
     }
 
     public function store(Request $request, Handler $handler)

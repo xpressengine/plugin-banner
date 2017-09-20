@@ -71,7 +71,7 @@ class Handler
 
     public function getGroups()
     {
-        return Group::with('itemCountRelation')->get();
+        return Group::get();
     }
 
     public function createItem($group, $attrs = [])
@@ -86,6 +86,9 @@ class Handler
             $item->{$key} = $value;
         }
         $item->save();
+
+        $group->increment('count');
+
         return $item;
     }
 
@@ -162,10 +165,14 @@ class Handler
 
     public function removeItem($item)
     {
+        $item->group->decrement('count');
+
         if ($image = $item->image) {
             $this->removeFile($image);
         }
         $item->delete();
+
+
     }
 
     public function sortItems($group, $orders)

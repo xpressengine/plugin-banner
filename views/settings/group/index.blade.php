@@ -30,7 +30,7 @@
                         @foreach($groups as $group)
                             <tr>
                                 <td>{{ $group->title }}</td>
-                                <td>{{ $group->item_count }}</td>
+                                <td>{{ $group->count }}</td>
                                 <td>{{ $group->created_at->format('Y.m.d H:i:s') }}</td>
                                 <td>
                                     <a class="xe-btn xe-btn-xs xe-btn-default"

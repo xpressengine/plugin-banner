@@ -181,6 +181,7 @@ class Plugin extends AbstractPlugin
                     $table->string('id', 36)->primary();
                     $table->string('title')->unique();
                     $table->string('skin', 1000);
+                    $table->integer('count')->default(0);
                     $table->timestamp('created_at');
                     $table->timestamp('updated_at');
                 }
@@ -206,7 +207,12 @@ class Plugin extends AbstractPlugin
      */
     public function update()
     {
-        // implement code
+        // for v0.9.3
+        if (!Schema::hasColumn('banner_group', 'count')) {
+            Schema::table('banner_group', function (Blueprint $table) {
+                $table->integer('count')->default(0)->after('skin');
+            });
+        }
     }
 
     /**
@@ -217,9 +223,12 @@ class Plugin extends AbstractPlugin
      */
     public function checkUpdated()
     {
-        // implement code
+        // for v0.9.3
+        if (!Schema::hasColumn('banner_group', 'count')) {
+            return false;
+        }
 
-        return parent::checkUpdated();
+        return true;
     }
 
     /**

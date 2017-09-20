@@ -60,7 +60,7 @@ class ItemController extends Origin
     public function edit(Request $request, Handler $handler, $group_id, $item_id)
     {
         $item = $handler->getItem($item_id);
-        return apiRender($this->plugin->view('views.settings.item.edit'), compact('item'));
+        return api_render($this->plugin->view('views.settings.item.edit'), compact('item'));
     }
 
     public function update(Request $request, Handler $handler, $group_id, $item_id)

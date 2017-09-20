@@ -6,7 +6,7 @@
  *
  * @category    Banner
  * @package     Xpressengine\Plugins\Banner
- * @author      XE Team (khongchi) <khongchi@xpressengine.com>
+ * @author      XE Team (developers) <developers@xpressengine.com>
  * @copyright   2000-2014 Copyright (C) NAVER <http://www.navercorp.com>
  * @license     http://www.gnu.org/licenses/lgpl-3.0-standalone.html LGPL
  * @link        http://www.xpressengine.com
@@ -19,7 +19,7 @@ use Xpressengine\Plugins\Banner\BannerWidgetSkin;
 /**
      * @category    Banner
      * @package     Xpressengine\Plugins\Banner
-     * @author      XE Team (khongchi) <khongchi@xpressengine.com>
+     * @author      XE Team (developers) <developers@xpressengine.com>
      * @license     http://www.gnu.org/licenses/lgpl-3.0-standalone.html LGPL
      * @link        http://www.xpressengine.com
      */
@@ -34,19 +34,6 @@ class Group extends DynamicModel
     public function items()
     {
         return $this->hasMany(Item::class);
-    }
-
-    public function itemCountRelation()
-    {
-        return $this->items()->selectRaw(
-            'group_id, count(*) as count'
-        )->groupBy('group_id');
-    }
-
-    public function getItemCountAttribute()
-    {
-        $count = $this->itemCountRelation->first();
-        return $count ? $count->count : 0;
     }
 
     public function getSkinClassAttribute()
