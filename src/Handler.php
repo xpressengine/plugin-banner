@@ -144,7 +144,7 @@ class Handler
             "public/plugin/banner/{$item->group_id}/{$item->id}",
             'image'
         );
-        app('xe.storage')->bind("banner/{$item->group_id}/{$item->id}", $file);
+        app('xe.storage')->bind($item->id, $file);
 
         $saved = [
             'id' => $file->id,
