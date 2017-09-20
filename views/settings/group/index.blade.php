@@ -33,9 +33,6 @@
                                 <td>{{ $group->count }}</td>
                                 <td>{{ $group->created_at->format('Y.m.d H:i:s') }}</td>
                                 <td>
-                                    <a class="xe-btn xe-btn-xs xe-btn-default"
-                                       onclick="window.open(this.href, 'bannerEditor', 'directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no');return false"
-                                       href="{{ route('banner::group.edit', ['group_id' => $group->id]) }}">편집</a>
                                     <a class="xe-btn xe-btn-default xe-btn-xs" role="button" data-toggle="collapse" href="#widget-code-{{ $group->id }}">
                                         위젯코드
                                     </a>
