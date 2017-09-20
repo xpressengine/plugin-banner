@@ -38,9 +38,9 @@ class Widget extends AbstractWidget
         $setting = $this->setting();
         $group_id = array_get($setting, 'group_id');
 
-        $group = app('banner::handler')->getGroup($group_id);
+        $group = app('xe.banner')->getGroup($group_id);
 
-        $items = app('banner::handler')->getItems($group, array_get($group->skin_info, 'count'), true);
+        $items = app('xe.banner')->getItems($group, array_get($group->skin_info, 'count'), true);
 
         array_set($this->config, '@attributes.skin-id', $group->skin);
 
@@ -60,7 +60,7 @@ class Widget extends AbstractWidget
      */
     public function renderSetting(array $args = [])
     {
-        $groups = app('banner::handler')->getGroups();
+        $groups = app('xe.banner')->getGroups();
         return view(Plugin::view('views.widget.setting'), compact('groups', 'args'));
     }
 

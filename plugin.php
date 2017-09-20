@@ -19,7 +19,7 @@ class Plugin extends AbstractPlugin
             $proxyClass = app('xe.interception')->proxy(Handler::class, 'Banner');
             return new $proxyClass($this);
         });
-        app()->alias(Handler::class, 'banner::handler');
+        app()->alias(Handler::class, 'xe.banner');
     }
 
 
