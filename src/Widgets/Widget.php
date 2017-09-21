@@ -48,7 +48,7 @@ class Widget extends AbstractWidget
         if(auth()->user()->isAdmin()) {
             $footer = '<div style="position:relative;top:-30px;text-align:right"><a class="xe-btn xe-btn-xs xe-btn-primary-outline" href="'.route('banner::group.edit',['group_id' => $group->id]).'" onclick="window.open(this.href, \'bannerEditor\', \'directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no\');return false">배너편집</a></div>';
         }
-        return $this->renderSkin(compact('items')).$footer;
+        return $this->renderSkin(compact('group', 'items')).$footer;
     }
 
     /**
