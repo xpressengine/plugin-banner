@@ -41,7 +41,7 @@
                             </tr>
                             <tr id="widget-code-{{ $group->id }}" class="collapse">
                                 <td colspan="4" class="">
-                                    <div class="well">{{ $group->widget_code }}</div>
+                                    <div class="well">{{ $group->getWidgetCode() }}</div>
                                 </td>
                             </tr>
                         @endforeach

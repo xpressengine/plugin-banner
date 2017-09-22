@@ -17,7 +17,7 @@
     {{ uio('formText', ['name'=>'title', 'label'=>'제목', 'value'=>$item->title]) }}
     {{ uio('formTextarea', ['name'=>'content', 'label'=>'내용', 'value'=>e($item->content)]) }}
 
-    {{ uio('formImage', ['name'=>'image', 'label'=>'이미지 ('.$item->image_size['width'].'x'.$item->image_size['height'].')', 'value'=>$item->image ]) }}
+    {{ uio('formImage', ['name'=>'image', 'label'=>'이미지 ('.$item->getImageSize('width').'x'.$item->getImageSize('height').')', 'value'=>$item->image ]) }}
 
     <label for="">타이머 지정</label>
     <div class="well">

@@ -47,7 +47,7 @@ class ItemController extends Origin
         try {
             $item = $handler->createItem($group);
             $data = [
-                'item' => $item->toArray()
+                'item' => view('banner::views.settings.group.item', compact('item'))->render()
             ];
         } catch (\Exception $e) {
             \DB::rollBack();
@@ -90,7 +90,7 @@ class ItemController extends Origin
             $item = $handler->updateItem($item, $inputs);
 
             $data = [
-                'item' => $item->toArray()
+                'item' => view('banner::views.settings.group.item', compact('item'))->render()
             ];
         } catch (\Exception $e) {
             \DB::rollBack();

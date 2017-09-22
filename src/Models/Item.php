@@ -44,46 +44,17 @@ class Item extends DynamicModel
         'order'
     ];
 
-    protected $appends = [
-        'edit_url', 'delete_url', 'update_url', 'is_visible', 'image_url'
-    ];
-
-    //protected $fillable = [
-    //];
-
     public function group()
     {
         return $this->belongsTo(Group::class);
     }
 
-    public function getEditUrlAttribute()
+    public function getImageSize($type = null)
     {
-        return route('banner::item.edit', ['group_id' => $this->group_id, 'item_id' => $this->id]);
+        return $this->group->getImageSize($type);
     }
 
-    public function getDeleteUrlAttribute()
-    {
-        return route('banner::item.delete', ['group_id' => $this->group_id, 'item_id' => $this->id]);
-    }
-
-    public function getUpdateUrlAttribute()
-    {
-        return route('banner::item.update', ['group_id' => $this->group_id, 'item_id' => $this->id]);
-    }
-
-    public function getOrderAttribute($value)
-    {
-        if($value === 0) {
-            return $this->id;
-        }
-    }
-
-    public function getImageSizeAttribute()
-    {
-        return $this->group->image_size;
-    }
-
-    public function getImageUrlAttribute()
+    public function imageUrl()
     {
         $path = array_get($this->image, 'path');
         if($path) {
@@ -91,10 +62,6 @@ class Item extends DynamicModel
         } else {
             return asset('assets/core/common/img/default_image_196x140.jpg');
         }
-    }
-
-    public function getIsVisibleAttribute(){
-        return $this->isVisible();
     }
 
     public function isVisible(Carbon $time = null)

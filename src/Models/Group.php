@@ -13,6 +13,7 @@
  */
 namespace Xpressengine\Plugins\Banner\Models;
 
+use Illuminate\Support\Arr;
 use Xpressengine\Database\Eloquent\DynamicModel;
 use Xpressengine\Plugins\Banner\BannerWidgetSkin;
 
@@ -31,37 +32,38 @@ class Group extends DynamicModel
 
     public $timestamps = true;
 
+    protected static $skinResolver;
+
     public function items()
     {
         return $this->hasMany(Item::class);
     }
 
-    public function getSkinClassAttribute()
-    {
-        return app('xe.register')->get($this->skin);
-    }
-
-    public function getSkinInfoAttribute()
+    public function getSkinInfo($key = null, $default = null)
     {
         /** @var BannerWidgetSkin $skin */
-        $skin = $this->skin_class;
-        return $skin::getBannerInfo();
-    }
-
-    public function getImageSizeAttribute()
-    {
-        /** @var BannerWidgetSkin $skin */
-        $skin = $this->skin_class;
+        $skin = $this->resolveSkin($this->skin)->getClass();
         $info = $skin::getBannerInfo();
 
-        return array_get($info, 'image', ['widget' => 800, 'height' => 600]);
-    }
-    public function getEditUrlAttribute()
-    {
-        return route('banner::group.edit', ['group_id' => $this->id]);
+        if (!$key) {
+            return $info;
+        }
+
+        return Arr::get($info, $key, $default);
     }
 
-    public function getWidgetCodeAttribute()
+    public function getImageSize($type = null)
+    {
+        $size = $this->getSkinInfo('image', ['widget' => 800, 'height' => 600]);
+
+        if (!$type) {
+            return $size;
+        }
+
+        return $size[$type];
+    }
+
+    public function getWidgetCode()
     {
         return sprintf(
             '<xewidget id="widget/banner@widget" title="%s" skin-id="%s"><group_id>%s</group_id></xewidget>',
@@ -71,4 +73,13 @@ class Group extends DynamicModel
         );
     }
 
+    public static function setSkinResolver(callable $resolver)
+    {
+        static::$skinResolver = $resolver;
+    }
+
+    protected function resolveSkin($skinId)
+    {
+        return call_user_func(static::$skinResolver, $skinId);
+    }
 }

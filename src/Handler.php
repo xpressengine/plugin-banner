@@ -133,13 +133,12 @@ class Handler
         }
     }
 
-    protected function saveImage($item, UploadedFile $file)
+    protected function saveImage(Item $item, UploadedFile $file)
     {
         $imageManager = Thumbnailer::getManager();
-        $size = $item->image_size;
 
         $img = $imageManager->make($file->getRealPath());
-        $img = $img->fit(array_get($size, 'width'), array_get($size, 'height'));
+        $img = $img->fit($item->getImageSize('width'), $item->getImageSize('height'));
 
         // save new file
         $file = app('xe.storage')->create(

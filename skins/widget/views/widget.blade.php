@@ -3,7 +3,7 @@
                 <li class="media">
                     <div class="media-left">
                         <a href="{{ url($item->link) }}" target="{{ $item->link_target }}">
-                            <img src="{{ $item->image_url }}" alt="" width="100" height="75">
+                            <img src="{{ $item->imageUrl() }}" alt="" width="100" height="75">
                         </a>
                     </div>
                     <div class="media-body">

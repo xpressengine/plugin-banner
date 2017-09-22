@@ -1,10 +1,12 @@
 <?php
 namespace Xpressengine\Plugins\Banner;
 
+use App\Facades\XeSkin;
 use Illuminate\Database\Schema\Blueprint;
 use Route;
 use Schema;
 use Xpressengine\Plugin\AbstractPlugin;
+use Xpressengine\Plugins\Banner\Models\Group;
 
 class Plugin extends AbstractPlugin
 {
@@ -33,6 +35,10 @@ class Plugin extends AbstractPlugin
         // implement code
 
         $this->route();
+
+        Group::setSkinResolver(function ($skinId) {
+            return XeSkin::get($skinId);
+        });
     }
 
     /**

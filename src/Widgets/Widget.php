@@ -40,7 +40,7 @@ class Widget extends AbstractWidget
 
         $group = app('xe.banner')->getGroup($group_id);
 
-        $items = app('xe.banner')->getItems($group, array_get($group->skin_info, 'count'), true);
+        $items = app('xe.banner')->getItems($group, $group->getSkinInfo('count'), true);
 
         array_set($this->config, '@attributes.skin-id', $group->skin);
 

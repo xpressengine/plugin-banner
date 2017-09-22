@@ -43,10 +43,10 @@ $.fn.extend({
         this.itemSaved = function(data){
             var item = data.item;
             var newItem = makeItem(item);
-            var oldItem = ui.itemList.find('li[data-id='+item.id+']');
+            var oldItem = ui.itemList.find('li[data-id='+newItem.data('id')+']');
             oldItem.before(newItem);
             oldItem.remove();
-            selectItem(item.id);
+            selectItem(newItem.data('id'));
         }
         this.reorder = function() {
             var orders = ui.itemList.sortable("toArray", {attribute:'data-id'});
@@ -122,9 +122,9 @@ $.fn.extend({
         };
 
         var itemAdded = function(data) {
-            var item = data.item;
-            ui.itemList.prepend(makeItem(item));
-            selectItem(item.id);
+            var item = makeItem(data.item);
+            ui.itemList.prepend(item);
+            selectItem(item.data('id'));
         }
 
         var removeItem = function(url, callback) {
@@ -158,24 +158,7 @@ $.fn.extend({
         }
 
         var makeItem = function(item) {
-            var c = 'alert-warning';
-            var h = '';
-
-            if (item.is_visible) {
-                c = 'alert-info';
-            }
-            if(item.status === 'show') {
-                h = 'hidden';
-            }
-            return $('<li data-id="'+item.id+'" data-edit-url="'+item.edit_url+'" data-delete-url="'+item.delete_url+'"> \
-                <div class="alert alert-dismissible '+c+'"> \
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button> \
-                <span class="selected" style="display: none;"><i class="xi-label"></i></span> \
-                <img src="'+item.image_url+'" alt="" height="30px"> \
-                <span class="title">'+ item.title +'</span> \
-                <span class="'+h+'"><i class="xi-eye-off"></i> \
-            </div> \
-            </li>')
+            return $($.parseHTML(item));
         }
 
         init();
