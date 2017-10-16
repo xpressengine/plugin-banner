@@ -59,8 +59,10 @@ class ItemController extends Origin
 
     public function edit(Request $request, Handler $handler, $group_id, $item_id)
     {
+        $group = $handler->getGroup($group_id);
+        $skin = \XeSkin::get($group->skin);
         $item = $handler->getItem($item_id);
-        return api_render($this->plugin->view('views.settings.item.edit'), compact('item'));
+        return api_render($this->plugin->view('views.settings.item.edit'), compact('item', 'skin'));
     }
 
     public function update(Request $request, Handler $handler, $group_id, $item_id)
@@ -82,6 +84,11 @@ class ItemController extends Origin
         if (array_get($inputs, 'link_target') === null) {
             $inputs['link_target'] = '_self';
         }
+
+        $inputs['etc'] = $request->except([
+            '_token', '_method', 'title', 'image', 'content', 'status', 'use_timer', 'link', 'link_target',
+            'started_at_date', 'started_at_time', 'ended_at_date', 'ended_at_time',
+        ]);
 
         $item = $handler->getItem($item_id);
 

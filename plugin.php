@@ -171,6 +171,7 @@ class Plugin extends AbstractPlugin
                     $table->boolean('use_timer')->default(false);
                     $table->timestamp('started_at')->nullable();
                     $table->timestamp('ended_at')->nullable();
+                    $table->text('etc');
                     $table->timestamp('created_at');
                     $table->timestamp('updated_at');
                     $table->index('group_id', 'order');
@@ -219,6 +220,11 @@ class Plugin extends AbstractPlugin
                 $table->integer('count')->default(0)->after('skin');
             });
         }
+        if (!Schema::hasColumn('banner_item', 'etc')) {
+            Schema::table('banner_item', function (Blueprint $table) {
+                $table->text('etc')->after('ended_at');
+            });
+        }
     }
 
     /**
@@ -231,6 +237,9 @@ class Plugin extends AbstractPlugin
     {
         // for v0.9.3
         if (!Schema::hasColumn('banner_group', 'count')) {
+            return false;
+        }
+        if (!Schema::hasColumn('banner_item', 'etc')) {
             return false;
         }
 

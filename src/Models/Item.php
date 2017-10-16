@@ -37,7 +37,8 @@ class Item extends DynamicModel
         'image' => 'array',
         'use_timer' => 'boolean',
         'started_at' => 'date',
-        'ended_at' => 'date'
+        'ended_at' => 'date',
+        'etc' => 'array'
     ];
 
     protected $fillable = [

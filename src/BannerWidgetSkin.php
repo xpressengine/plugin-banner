@@ -12,4 +12,9 @@ class BannerWidgetSkin extends GenericSkin
         }
         return static::info('banner'.$key);
     }
+
+    public function renderBannerSetting()
+    {
+        return '';
+    }
 }

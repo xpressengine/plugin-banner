@@ -46,7 +46,8 @@ class Widget extends AbstractWidget
 
         $footer = '';
         if(auth()->user()->isAdmin()) {
-            $footer = '<div style="position:relative;top:-30px;text-align:right"><a class="xe-btn xe-btn-xs xe-btn-primary-outline" href="'.route('banner::group.edit',['group_id' => $group->id]).'" onclick="window.open(this.href, \'bannerEditor\', \'directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no\');return false">배너편집</a></div>';
+            // 경우에 따라 버튼의 스타일이 다르게 표현되어 디자인이 깨지는 현상으로 인해 주석처리
+//            $footer = '<div style="position:relative;top:-30px;text-align:right"><a class="xe-btn xe-btn-xs xe-btn-primary-outline" href="'.route('banner::group.edit',['group_id' => $group->id]).'" onclick="window.open(this.href, \'bannerEditor\', \'directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no\');return false">배너편집</a></div>';
         }
         return $this->renderSkin(compact('group', 'items')).$footer;
     }
