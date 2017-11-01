@@ -48,5 +48,14 @@
 
     </div>
 
+    @if($form = $skin->renderBannerSetting($item->etc))
+        <div class="panel panel-default">
+            <div class="panel-heading">스킨설정</div>
+            <div class="panel-body">
+                {!! $form !!}
+            </div>
+        </div>
+    @endif
+
     <button type="submit" class="xe-btn xe-btn-primary" onclick="bannerEditor.lock();">저장</button>
 </form>
