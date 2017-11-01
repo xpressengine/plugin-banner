@@ -81,17 +81,33 @@ class Handler
         $item->order = 9999; // todo: fix order
         $item->status = 'hidden';
         $item->title = 'untitled';
-        $item->content = '';
-        $item->link = '';
-        $item->link_target = '';
-        $item->image = '';
-        $item->status = '';
-        $item->use_timer = 0;
-        $item->etc = '';
+
+        if (isset($attrs['content']) == false) {
+            $attrs['content'] = '';
+        }
+        if (isset($attrs['link']) == false) {
+            $attrs['link'] = '';
+        }
+        if (isset($attrs['link_target']) == false) {
+            $attrs['link_target'] = '';
+        }
+        if (isset($attrs['image']) == false) {
+            $attrs['image'] = '';
+        }
+        if (isset($attrs['status']) == false) {
+            $attrs['status'] = '';
+        }
+        if (isset($attrs['use_timer']) == false) {
+            $attrs['use_timer'] = 0;
+        }
+        if (isset($attrs['etc']) == false) {
+            $attrs['etc'] = '';
+        }
 
         foreach ($attrs as $key => $value) {
             $item->{$key} = $value;
         }
+
         $item->save();
 
         $group->increment('count');
