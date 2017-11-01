@@ -81,6 +81,13 @@ class Handler
         $item->order = 9999; // todo: fix order
         $item->status = 'hidden';
         $item->title = 'untitled';
+        $item->content = '';
+        $item->link = '';
+        $item->link_target = '';
+        $item->image = '';
+        $item->status = '';
+        $item->use_timer = 0;
+        $item->etc = '';
 
         foreach ($attrs as $key => $value) {
             $item->{$key} = $value;
