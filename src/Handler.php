@@ -35,6 +35,8 @@ class Handler
      */
     protected $plugin;
 
+    protected static $resizable = true;
+
     public function __construct(Plugin $plugin)
     {
         $this->plugin = $plugin;
@@ -158,17 +160,15 @@ class Handler
 
     protected function saveImage(Item $item, UploadedFile $file)
     {
-        $imageManager = Thumbnailer::getManager();
+        $file = static::isResizable() ?
+            $this->saveAfterResize(
+                $file,
+                $this->getSavedPath($item),
+                $item->getImageSize('width'),
+                $item->getImageSize('height'),
+                hash('sha1', $item->id).'.'.$file->getClientOriginalExtension()
+            ) : $this->simpleSave($file, $this->getSavedPath($item));
 
-        $img = $imageManager->make($file->getRealPath());
-        $img = $img->fit($item->getImageSize('width'), $item->getImageSize('height'));
-
-        // save new file
-        $file = app('xe.storage')->create(
-            $img->encode()->getEncoded(),
-            "public/plugin/banner/{$item->group_id}",
-            hash('sha1', $item->id)
-        );
         app('xe.storage')->bind($item->id, $file);
 
         $saved = [
@@ -183,6 +183,36 @@ class Handler
         }
 
         return $saved;
+    }
+
+    protected function saveAfterResize(UploadedFile $file, $path, $width, $height, $name = null)
+    {
+
+        $imageManager = Thumbnailer::getManager();
+
+        $img = $imageManager->make($file->getRealPath());
+        $img = $img->fit($width, $height);
+
+        // save new file
+        $file = app('xe.storage')->create(
+            $img->encode()->getEncoded(),
+            $path,
+            $name ?: $file->getClientOriginalName()
+        );
+
+        return $file;
+    }
+
+    protected function simpleSave(UploadedFile $file, $path)
+    {
+        $file = app('xe.storage')->upload($file, $path);
+
+        return $file;
+    }
+
+    protected function getSavedPath(Item $item)
+    {
+        return "public/plugin/banner/{$item->group_id}";
     }
 
     public function removeItem($item)
@@ -227,5 +257,15 @@ class Handler
         }
 
         return $query->orderBy('order', 'desc')->orderBy('created_at','desc')->get();
+    }
+
+    public static function setResizable($bool = true)
+    {
+        static::$resizable = $bool;
+    }
+
+    public static function isResizable()
+    {
+        return static::$resizable;
     }
 }
