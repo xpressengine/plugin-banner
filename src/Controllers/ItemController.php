@@ -68,6 +68,9 @@ class ItemController extends Origin
     public function update(Request $request, Handler $handler, $group_id, $item_id)
     {
         $inputs = $request->only(['title', 'image', 'content', 'status', 'use_timer', 'link', 'link_target']);
+        if (isset($inputs['use_timer']) == false) {
+            $inputs['use_timer'] = 0;
+        }
 
         $sd = $request->get('started_at_date');
         $st = $request->get('started_at_time');

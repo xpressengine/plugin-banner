@@ -138,6 +138,9 @@ class Handler
         }
 
         foreach ($attrs as $key => $value) {
+            if ($value == null) {
+                $value = '';
+            }
             $item->{$key} = $value;
         }
 

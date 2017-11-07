@@ -29,7 +29,7 @@
             <div class="row">
                 <div class="col-xs-12"><label for="">노출 시작 일시</label></div>
                 <div class="col-md-6">
-                    {{ uio('formText', ['name'=>'started_at_date', 'type'=>'date', 'value'=>($item->started_at ? $item->started_at->format('Y-m-d') : '1970-01-01')]) }}
+                    {{ uio('formText', ['name'=>'started_at_date', 'type'=>'date', 'value'=>($item->started_at ? $item->started_at->format('Y-m-d') : date('Y-m-d'))]) }}
                 </div>
                 <div class="col-md-6">
                     {{ uio('formText', ['name'=>'started_at_time', 'type'=>'time', 'value'=>($item->started_at ? $item->started_at->format('H:i') : $item->created_at->format('H:i'))]) }}
