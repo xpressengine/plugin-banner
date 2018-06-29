@@ -88,6 +88,10 @@ class ItemController extends Origin
             $inputs['link_target'] = '_self';
         }
 
+        if ($request->get('original_image_size', null) == 1) {
+            $handler::setResizable(false);
+        }
+
         $inputs['etc'] = $request->except([
             '_token', '_method', 'title', 'image', 'content', 'status', 'use_timer', 'link', 'link_target',
             'started_at_date', 'started_at_time', 'ended_at_date', 'ended_at_time',

@@ -19,6 +19,15 @@
 
     {{ uio('formImage', ['name'=>'image', 'label'=>'이미지 ('.$item->getImageSize('width').'x'.$item->getImageSize('height').')', 'value'=>$item->image ]) }}
 
+    <div class="form-group">
+        <label for="">원본 사이즈로 업로드</label>
+        <div class="well">
+            <div class="">
+                <label><input name="original_image_size" type="checkbox" value="1"> 원본 사이즈로 업로드 (배너 이미지를 원본 사이즈로 업로드 하려면 체크하세요.)</label>
+            </div>
+        </div>
+    </div>
+
     <label for="">타이머 지정</label>
     <div class="well">
         <div class="">
