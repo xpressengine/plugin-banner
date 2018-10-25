@@ -37,6 +37,7 @@
                                     <a class="xe-btn xe-btn-default xe-btn-xs" role="button" data-toggle="collapse" href="#widget-code-{{ $group->id }}">
                                         위젯코드
                                     </a>
+                                    <a class="xe-btn xe-btn-default xe-btn-xs" href="{{ route('banner::group.update', ['group_id' => $group->id]) }}" role="button" data-toggle="xe-page-modal">설정</a>
                                 </td>
                             </tr>
                             <tr id="widget-code-{{ $group->id }}" class="collapse">

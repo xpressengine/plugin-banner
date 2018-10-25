@@ -82,6 +82,11 @@ class Plugin extends AbstractPlugin
                     //]);
 
                     // 그룹 수정
+                    // GET settings/banner/groups/GROUP_ID
+                    Route::get('{group_id}', [
+                        'as' => 'banner::group.update',
+                        'uses' => 'GroupController@updateForm'
+                    ]);
                     // PUT settings/banner/groups/GROUP_ID
                     Route::put('{group_id}', [
                         'as' => 'banner::group.update',
@@ -90,7 +95,7 @@ class Plugin extends AbstractPlugin
 
                     // 편집기 출력(그룹 편집)
                     // GET settings/banner/groups/GROUP_ID/edit
-                    
+
                     Route::get('{group_id}/edit', [
                         'as' => 'banner::group.edit',
                         'uses' => 'GroupController@edit'

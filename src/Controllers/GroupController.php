@@ -94,6 +94,13 @@ class GroupController extends Origin
         return app('xe.presenter')->make($this->plugin->view('views.settings.group.edit'), compact('group', 'items'));
     }
 
+    public function updateForm($group_id)
+    {
+        $group = Group::find($group_id);
+
+        return api_Render($this->plugin->view('views.settings.group.update'), compact('group'));
+    }
+
     public function update(Request $request, Handler $handler, $group_id)
     {
         $group = $handler->getGroup($group_id);
@@ -115,6 +122,6 @@ class GroupController extends Origin
 
         $group->save();
 
-        return app('xe.presenter')->makeApi(['alert'=>['type'=>'success', 'message'=>'수정되었습니다']]);
+        return redirect()->route('banner::group.index')->with(['alert'=>['type'=>'success', 'message'=>'수정되었습니다.']]);
     }
 }
