@@ -61,7 +61,7 @@ class Item extends DynamicModel
         if($path) {
             return asset($path);
         } else {
-            return asset('assets/core/common/img/default_image_196x140.jpg');
+            return asset('assets/core/common/img/default_image_1200x800.jpg');
         }
     }
 
