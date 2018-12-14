@@ -1,16 +1,19 @@
 <?php
 /**
- *  This file is part of the Xpressengine package.
+ * ItemController.php
+ *
+ * This file is part of the Xpressengine package.
  *
  * PHP version 5
  *
- * @category    Point
- * @package     Xpressengine\Plugins\Point
+ * @category    Banner
+ * @package     Xpressengine\Plugins\Banner
  * @author      XE Team (developers) <developers@xpressengine.com>
  * @copyright   2015 Copyright (C) NAVER <http://www.navercorp.com>
  * @license     http://www.gnu.org/licenses/lgpl-3.0-standalone.html LGPL
  * @link        http://www.xpressengine.com
  */
+
 namespace Xpressengine\Plugins\Banner\Controllers;
 
 use App\Http\Controllers\Controller as Origin;
@@ -20,8 +23,10 @@ use Xpressengine\Plugins\Banner\Models\Item;
 use Xpressengine\Plugins\Banner\Plugin;
 
 /**
- * @category    Point
- * @package     Xpressengine\Plugins\Point\Controllers
+ * ItemController
+ *
+ * @category    Widget
+ * @package     Xpressengine\Plugins\Widget
  * @author      XE Team (developers) <developers@xpressengine.com>
  * @copyright   2015 Copyright (C) NAVER <http://www.navercorp.com>
  * @license     http://www.gnu.org/licenses/lgpl-3.0-standalone.html LGPL
@@ -34,11 +39,26 @@ class ItemController extends Origin
      */
     protected $plugin;
 
+    /**
+     * ItemController constructor.
+     *
+     * @param Plugin $plugin plugin
+     */
     public function __construct(Plugin $plugin)
     {
         $this->plugin = $plugin;
     }
 
+    /**
+     * store
+     *
+     * @param Request $request  request
+     * @param Handler $handler  banner handler
+     * @param string  $group_id group id
+     *
+     * @return mixed
+     * @throws \Throwable
+     */
     public function store(Request $request, Handler $handler, $group_id)
     {
         $group = $handler->getGroup($group_id);
@@ -54,9 +74,20 @@ class ItemController extends Origin
             throw $e;
         }
         \DB::commit();
-        return app('xe.presenter')->makeApi(array_merge($data, ['alert' => ['type'=>'success', 'message'=>'추가되었습니다.']]));
+        return app('xe.presenter')
+            ->makeApi(array_merge($data, ['alert' => ['type' => 'success', 'message' => '추가되었습니다.']]));
     }
 
+    /**
+     * edit
+     *
+     * @param Request $request  request
+     * @param Handler $handler  banner handler
+     * @param string  $group_id group id
+     * @param string  $item_id  item id
+     *
+     * @return mixed
+     */
     public function edit(Request $request, Handler $handler, $group_id, $item_id)
     {
         $group = $handler->getGroup($group_id);
@@ -65,6 +96,17 @@ class ItemController extends Origin
         return api_render($this->plugin->view('views.settings.item.edit'), compact('item', 'skin'));
     }
 
+    /**
+     * update
+     *
+     * @param Request $request  request
+     * @param Handler $handler  banner handler
+     * @param string  $group_id group id
+     * @param string  $item_id  item id
+     *
+     * @return mixed
+     * @throws \Throwable
+     */
     public function update(Request $request, Handler $handler, $group_id, $item_id)
     {
         $inputs = $request->only(['title', 'image', 'content', 'status', 'use_timer', 'link', 'link_target']);
@@ -78,10 +120,10 @@ class ItemController extends Origin
         $et = $request->get('ended_at_time');
 
         if ($sd) {
-            $inputs['started_at'] = $sd.' '.($st ?: '00:00').':00';
+            $inputs['started_at'] = $sd . ' ' . ($st ?: '00:00') . ':00';
         }
         if ($ed) {
-            $inputs['ended_at'] = $ed.' '.($et ?: '00:00').':00';
+            $inputs['ended_at'] = $ed . ' ' . ($et ?: '00:00') . ':00';
         }
 
         if (array_get($inputs, 'link_target') === null) {
@@ -112,10 +154,23 @@ class ItemController extends Origin
         }
         \DB::commit();
 
-        return app('xe.presenter')->makeApi(array_merge($data, ['alert' => ['type'=>'success', 'message'=>'저장되었습니다.']]));
+        return app('xe.presenter')
+            ->makeApi(array_merge($data, ['alert' => ['type' => 'success', 'message' => '저장되었습니다.']]));
     }
 
-    public function destroy(Request $request, Handler $handler, $group_id, $item_id){
+    /**
+     * destroy
+     *
+     * @param Request $request  request
+     * @param Handler $handler  banner handler
+     * @param string  $group_id group id
+     * @param string  $item_id  item id
+     *
+     * @return mixed
+     * @throws \Exception
+     */
+    public function destroy(Request $request, Handler $handler, $group_id, $item_id)
+    {
         $item = Item::where('group_id', $group_id)->find($item_id);
 
         \DB::beginTransaction();
@@ -127,7 +182,6 @@ class ItemController extends Origin
         }
         \DB::commit();
 
-        return app('xe.presenter')->makeApi(['alert' => ['type'=>'success', 'message'=>'삭제되었습니다.']]);
+        return app('xe.presenter')->makeApi(['alert' => ['type' => 'success', 'message' => '삭제되었습니다.']]);
     }
-
 }

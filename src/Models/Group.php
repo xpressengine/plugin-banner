@@ -1,16 +1,19 @@
 <?php
 /**
- *  This file is part of the Xpressengine package.
+ * Group.php
+ *
+ * This file is part of the Xpressengine package.
  *
  * PHP version 5
  *
  * @category    Banner
  * @package     Xpressengine\Plugins\Banner
  * @author      XE Team (developers) <developers@xpressengine.com>
- * @copyright   2000-2014 Copyright (C) NAVER <http://www.navercorp.com>
+ * @copyright   2015 Copyright (C) NAVER <http://www.navercorp.com>
  * @license     http://www.gnu.org/licenses/lgpl-3.0-standalone.html LGPL
  * @link        http://www.xpressengine.com
  */
+
 namespace Xpressengine\Plugins\Banner\Models;
 
 use Illuminate\Support\Arr;
@@ -18,12 +21,15 @@ use Xpressengine\Database\Eloquent\DynamicModel;
 use Xpressengine\Plugins\Banner\BannerWidgetSkin;
 
 /**
-     * @category    Banner
-     * @package     Xpressengine\Plugins\Banner
-     * @author      XE Team (developers) <developers@xpressengine.com>
-     * @license     http://www.gnu.org/licenses/lgpl-3.0-standalone.html LGPL
-     * @link        http://www.xpressengine.com
-     */
+ * Group
+ *
+ * @category    Widget
+ * @package     Xpressengine\Plugins\Banner
+ * @author      XE Team (developers) <developers@xpressengine.com>
+ * @copyright   2015 Copyright (C) NAVER <http://www.navercorp.com>
+ * @license     http://www.gnu.org/licenses/lgpl-3.0-standalone.html LGPL
+ * @link        http://www.xpressengine.com
+ */
 class Group extends DynamicModel
 {
     protected $table = 'banner_group';
@@ -34,11 +40,22 @@ class Group extends DynamicModel
 
     protected static $skinResolver;
 
+    /**
+     * items
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function items()
     {
         return $this->hasMany(Item::class);
     }
 
+    /**
+     * @param null|string $key     key
+     * @param null|mixed  $default default
+     *
+     * @return array|mixed
+     */
     public function getSkinInfo($key = null, $default = null)
     {
         /** @var BannerWidgetSkin $skin */
@@ -52,6 +69,13 @@ class Group extends DynamicModel
         return Arr::get($info, $key, $default);
     }
 
+    /**
+     * get image size
+     *
+     * @param null|string $type type
+     *
+     * @return array|mixed
+     */
     public function getImageSize($type = null)
     {
         $size = $this->getSkinInfo('image', ['widget' => 800, 'height' => 600]);
@@ -63,6 +87,11 @@ class Group extends DynamicModel
         return $size[$type];
     }
 
+    /**
+     * get widget code
+     *
+     * @return string
+     */
     public function getWidgetCode()
     {
         return sprintf(
@@ -73,11 +102,25 @@ class Group extends DynamicModel
         );
     }
 
+    /**
+     * set skin resolver
+     *
+     * @param callable $resolver resolver
+     *
+     * @return void
+     */
     public static function setSkinResolver(callable $resolver)
     {
         static::$skinResolver = $resolver;
     }
 
+    /**
+     * resolve skin
+     *
+     * @param string $skinId skin id
+     *
+     * @return mixed
+     */
     protected function resolveSkin($skinId)
     {
         return call_user_func(static::$skinResolver, $skinId);

@@ -1,16 +1,19 @@
 <?php
 /**
- *  This file is part of the Xpressengine package.
+ * GroupController.php
+ *
+ * This file is part of the Xpressengine package.
  *
  * PHP version 5
  *
- * @category    Point
- * @package     Xpressengine\Plugins\Point
+ * @category    Banner
+ * @package     Xpressengine\Plugins\Banner
  * @author      XE Team (developers) <developers@xpressengine.com>
  * @copyright   2015 Copyright (C) NAVER <http://www.navercorp.com>
  * @license     http://www.gnu.org/licenses/lgpl-3.0-standalone.html LGPL
  * @link        http://www.xpressengine.com
  */
+
 namespace Xpressengine\Plugins\Banner\Controllers;
 
 use App\Http\Controllers\Controller as Origin;
@@ -20,8 +23,10 @@ use Xpressengine\Plugins\Banner\Models\Group;
 use Xpressengine\Plugins\Banner\Plugin;
 
 /**
- * @category    Point
- * @package     Xpressengine\Plugins\Point\Controllers
+ * GroupController
+ *
+ * @category    Widget
+ * @package     Xpressengine\Plugins\Banner
  * @author      XE Team (developers) <developers@xpressengine.com>
  * @copyright   2015 Copyright (C) NAVER <http://www.navercorp.com>
  * @license     http://www.gnu.org/licenses/lgpl-3.0-standalone.html LGPL
@@ -34,11 +39,23 @@ class GroupController extends Origin
      */
     protected $plugin;
 
+    /**
+     * GroupController constructor.
+     *
+     * @param Plugin $plugin plugin
+     */
     public function __construct(Plugin $plugin)
     {
         $this->plugin = $plugin;
     }
 
+    /**
+     * index
+     *
+     * @param Handler $handler banner handler
+     *
+     * @return mixed
+     */
     public function index(Handler $handler)
     {
         $groups = $handler->getGroups();
@@ -49,11 +66,23 @@ class GroupController extends Origin
         return app('xe.presenter')->make($this->plugin->view('views.settings.group.index'), compact('groups'));
     }
 
+    /**
+     * create
+     *
+     * @return mixed
+     */
     public function create()
     {
         return api_Render($this->plugin->view('views.settings.group.create'));
     }
 
+    /**
+     * @param Request $request request
+     * @param Handler $handler banner handler
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
+     */
     public function store(Request $request, Handler $handler)
     {
         $this->validate($request, [
@@ -71,9 +100,19 @@ class GroupController extends Origin
         }
         \DB::commit();
 
-        return redirect()->route('banner::group.index')->with(['alert'=>['type'=>'success', 'message'=>'추가되었습니다.']]);
+        return redirect()->route('banner::group.index')
+            ->with(['alert' => ['type' => 'success', 'message' => '추가되었습니다.']]);
     }
 
+    /**
+     * edit
+     *
+     * @param Request $request  request
+     * @param Handler $handler  banner handler
+     * @param string  $group_id group id
+     *
+     * @return mixed
+     */
     public function edit(Request $request, Handler $handler, $group_id)
     {
         app('xe.theme')->selectBlankTheme();
@@ -94,6 +133,13 @@ class GroupController extends Origin
         return app('xe.presenter')->make($this->plugin->view('views.settings.group.edit'), compact('group', 'items'));
     }
 
+    /**
+     * update form
+     *
+     * @param string $group_id group id
+     *
+     * @return mixed
+     */
     public function updateForm($group_id)
     {
         $group = Group::find($group_id);
@@ -101,6 +147,15 @@ class GroupController extends Origin
         return api_Render($this->plugin->view('views.settings.group.update'), compact('group'));
     }
 
+    /**
+     * update
+     *
+     * @param Request $request  request
+     * @param Handler $handler  banner handler
+     * @param string  $group_id group id
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function update(Request $request, Handler $handler, $group_id)
     {
         $group = $handler->getGroup($group_id);
@@ -122,6 +177,7 @@ class GroupController extends Origin
 
         $group->save();
 
-        return redirect()->route('banner::group.index')->with(['alert'=>['type'=>'success', 'message'=>'수정되었습니다.']]);
+        return redirect()->route('banner::group.index')
+            ->with(['alert' => ['type' => 'success', 'message' => '수정되었습니다.']]);
     }
 }

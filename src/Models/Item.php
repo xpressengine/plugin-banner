@@ -1,29 +1,34 @@
 <?php
 /**
- *  This file is part of the Xpressengine package.
+ * Item.php
+ *
+ * This file is part of the Xpressengine package.
  *
  * PHP version 5
  *
  * @category    Banner
  * @package     Xpressengine\Plugins\Banner
  * @author      XE Team (developers) <developers@xpressengine.com>
- * @copyright   2000-2014 Copyright (C) NAVER <http://www.navercorp.com>
+ * @copyright   2015 Copyright (C) NAVER <http://www.navercorp.com>
  * @license     http://www.gnu.org/licenses/lgpl-3.0-standalone.html LGPL
  * @link        http://www.xpressengine.com
  */
+
 namespace Xpressengine\Plugins\Banner\Models;
 
 use Carbon\Carbon;
 use Xpressengine\Database\Eloquent\DynamicModel;
 
-
 /**
-     * @category    Banner
-     * @package     Xpressengine\Plugins\Banner
-     * @author      XE Team (developers) <developers@xpressengine.com>
-     * @license     http://www.gnu.org/licenses/lgpl-3.0-standalone.html LGPL
-     * @link        http://www.xpressengine.com
-     */
+ * Item
+ *
+ * @category    Widget
+ * @package     Xpressengine\Plugins\Banner
+ * @author      XE Team (developers) <developers@xpressengine.com>
+ * @copyright   2015 Copyright (C) NAVER <http://www.navercorp.com>
+ * @license     http://www.gnu.org/licenses/lgpl-3.0-standalone.html LGPL
+ * @link        http://www.xpressengine.com
+ */
 class Item extends DynamicModel
 {
     protected $table = 'banner_item';
@@ -41,30 +46,52 @@ class Item extends DynamicModel
         'etc' => 'array'
     ];
 
-    protected $fillable = [
-        'order'
-    ];
+    protected $fillable = ['order'];
 
+    /**
+     * group
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function group()
     {
         return $this->belongsTo(Group::class);
     }
 
+    /**
+     * get image size
+     *
+     * @param null|string $type type
+     *
+     * @return mixed
+     */
     public function getImageSize($type = null)
     {
         return $this->group->getImageSize($type);
     }
 
+    /**
+     * image url
+     *
+     * @return string
+     */
     public function imageUrl()
     {
         $path = array_get($this->image, 'path');
-        if($path) {
+        if ($path) {
             return asset($path);
         } else {
             return asset('assets/core/common/img/default_image_1200x800.jpg');
         }
     }
 
+    /**
+     * check is visible
+     *
+     * @param Carbon|null $time time
+     *
+     * @return bool
+     */
     public function isVisible(Carbon $time = null)
     {
         if ($this->status !== 'show') {
@@ -84,5 +111,4 @@ class Item extends DynamicModel
             }
         }
     }
-
 }

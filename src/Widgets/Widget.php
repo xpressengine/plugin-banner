@@ -1,11 +1,13 @@
 <?php
 /**
- *  This file is part of the Xpressengine package.
+ * Widget.php
+ *
+ * This file is part of the Xpressengine package.
  *
  * PHP version 5
  *
- * @category
- * @package     Xpressengine\
+ * @category    Banner
+ * @package     Xpressengine\Plugins\Banner
  * @author      XE Team (developers) <developers@xpressengine.com>
  * @copyright   2015 Copyright (C) NAVER <http://www.navercorp.com>
  * @license     http://www.gnu.org/licenses/lgpl-3.0-standalone.html LGPL
@@ -18,8 +20,10 @@ use Xpressengine\Plugins\Banner\Plugin;
 use Xpressengine\Widget\AbstractWidget;
 
 /**
- * @category
- * @package     Xpressengine\Plugins\Banner\Widgets
+ * Widget
+ *
+ * @category    Widget
+ * @package     Xpressengine\Plugins\Banner
  * @author      XE Team (developers) <developers@xpressengine.com>
  * @copyright   2015 Copyright (C) NAVER <http://www.navercorp.com>
  * @license     http://www.gnu.org/licenses/lgpl-3.0-standalone.html LGPL
@@ -27,7 +31,6 @@ use Xpressengine\Widget\AbstractWidget;
  */
 class Widget extends AbstractWidget
 {
-
     /**
      * Get the evaluated contents of the object.
      *
@@ -49,11 +52,11 @@ class Widget extends AbstractWidget
         array_set($this->config, '@attributes.skin-id', $group->skin);
 
         $footer = '';
-        if(auth()->user()->isAdmin()) {
+        if (auth()->user()->isAdmin()) {
             // 경우에 따라 버튼의 스타일이 다르게 표현되어 디자인이 깨지는 현상으로 인해 주석처리
 //            $footer = '<div style="position:relative;top:-30px;text-align:right"><a class="xe-btn xe-btn-xs xe-btn-primary-outline" href="'.route('banner::group.edit',['group_id' => $group->id]).'" onclick="window.open(this.href, \'bannerEditor\', \'directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no\');return false">배너편집</a></div>';
         }
-        return $this->renderSkin(compact('group', 'items')).$footer;
+        return $this->renderSkin(compact('group', 'items')) . $footer;
     }
 
     /**
@@ -68,6 +71,4 @@ class Widget extends AbstractWidget
         $groups = app('xe.banner')->getGroups();
         return view(Plugin::view('views.widget.setting'), compact('groups', 'args'));
     }
-
-
 }

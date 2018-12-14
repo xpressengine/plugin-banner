@@ -1,11 +1,13 @@
 <?php
 /**
- *  This file is part of the Xpressengine package.
+ * Handler.php
+ *
+ * This file is part of the Xpressengine package.
  *
  * PHP version 5
  *
- * @category
- * @package     Xpressengine\
+ * @category    Banner
+ * @package     Xpressengine\Plugins\Banner
  * @author      XE Team (developers) <developers@xpressengine.com>
  * @copyright   2015 Copyright (C) NAVER <http://www.navercorp.com>
  * @license     http://www.gnu.org/licenses/lgpl-3.0-standalone.html LGPL
@@ -21,7 +23,9 @@ use Xpressengine\Plugins\Banner\Models\Group;
 use Xpressengine\Plugins\Banner\Models\Item;
 
 /**
- * @category
+ * Handler
+ *
+ * @category    Widget
  * @package     Xpressengine\Plugins\Banner
  * @author      XE Team (developers) <developers@xpressengine.com>
  * @copyright   2015 Copyright (C) NAVER <http://www.navercorp.com>
@@ -37,11 +41,23 @@ class Handler
 
     protected static $resizable = true;
 
+    /**
+     * Handler constructor.
+     *
+     * @param Plugin $plugin plugin
+     */
     public function __construct(Plugin $plugin)
     {
         $this->plugin = $plugin;
     }
 
+    /**
+     * create group
+     *
+     * @param array $attrs attributes
+     *
+     * @return Group
+     */
     public function createGroup($attrs)
     {
         $group = new Group();
@@ -51,18 +67,33 @@ class Handler
         return $group;
     }
 
+    /**
+     * get group
+     *
+     * @param string $group_id group id
+     *
+     * @return Group
+     */
     public function getGroup($group_id)
     {
         return Group::find($group_id);
     }
 
+    /**
+     * remove group
+     *
+     * @param string|Group $group group or group id
+     *
+     * @return void
+     * @throws \Exception
+     */
     public function removeGroup($group)
     {
-        if(is_string($group)) {
+        if (is_string($group)) {
             $group = Group::find($group);
         }
 
-        if($group !== null) {
+        if ($group !== null) {
             $group->delete();
             $items = Items::where('group_id', $group->id)->get();
             foreach ($items as $item) {
@@ -71,11 +102,24 @@ class Handler
         }
     }
 
+    /**
+     * get groups
+     *
+     * @return mixed
+     */
     public function getGroups()
     {
         return Group::get();
     }
 
+    /**
+     * create item
+     *
+     * @param Group $group group model
+     * @param array $attrs attributes
+     *
+     * @return Item
+     */
     public function createItem($group, $attrs = [])
     {
         $item = new Item();
@@ -117,11 +161,26 @@ class Handler
         return $item;
     }
 
+    /**
+     * get item
+     *
+     * @param string $item_id item id
+     *
+     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|Item|Item[]|null
+     */
     public function getItem($item_id)
     {
         return Item::with('group')->find($item_id);
     }
 
+    /**
+     * update item
+     *
+     * @param Group $item  group item
+     * @param array $attrs attributes
+     *
+     * @return mixed
+     */
     public function updateItem($item, $attrs = [])
     {
         // process image
@@ -148,6 +207,13 @@ class Handler
         return $item;
     }
 
+    /**
+     * remove file
+     *
+     * @param array $image image
+     *
+     * @return void
+     */
     protected function removeFile($image)
     {
         $id = $image['id'];
@@ -161,6 +227,14 @@ class Handler
         }
     }
 
+    /**
+     * save image
+     *
+     * @param Item         $item item
+     * @param UploadedFile $file image file
+     *
+     * @return array
+     */
     protected function saveImage(Item $item, UploadedFile $file)
     {
         $file = static::isResizable() ?
@@ -169,7 +243,7 @@ class Handler
                 $this->getSavedPath($item),
                 $item->getImageSize('width'),
                 $item->getImageSize('height'),
-                hash('sha1', $item->id).'.'.$file->getClientOriginalExtension()
+                hash('sha1', $item->id) . '.' . $file->getClientOriginalExtension()
             ) : $this->simpleSave($file, $this->getSavedPath($item));
 
         app('xe.storage')->bind($item->id, $file);
@@ -188,9 +262,19 @@ class Handler
         return $saved;
     }
 
+    /**
+     * save after resize
+     *
+     * @param UploadedFile $file   file
+     * @param string       $path   save path
+     * @param int          $width  width
+     * @param int          $height height
+     * @param null|string  $name   name
+     *
+     * @return UploadedFile
+     */
     protected function saveAfterResize(UploadedFile $file, $path, $width, $height, $name = null)
     {
-
         $imageManager = Thumbnailer::getManager();
 
         $img = $imageManager->make($file->getRealPath());
@@ -206,6 +290,14 @@ class Handler
         return $file;
     }
 
+    /**
+     * simple save
+     *
+     * @param UploadedFile $file file
+     * @param string       $path save path
+     *
+     * @return UploadedFile
+     */
     protected function simpleSave(UploadedFile $file, $path)
     {
         $file = app('xe.storage')->upload($file, $path);
@@ -213,11 +305,26 @@ class Handler
         return $file;
     }
 
+    /**
+     * get save path
+     *
+     * @param Item $item item
+     *
+     * @return string
+     */
     protected function getSavedPath(Item $item)
     {
         return "public/plugin/banner/{$item->group_id}";
     }
 
+    /**
+     * remove item
+     *
+     * @param Item $item item
+     *
+     * @return void
+     * @throws \Exception
+     */
     public function removeItem($item)
     {
         $item->group->decrement('count');
@@ -226,10 +333,16 @@ class Handler
             $this->removeFile($image);
         }
         $item->delete();
-
-
     }
 
+    /**
+     * sort items
+     *
+     * @param Group        $group  group
+     * @param string|array $orders order
+     *
+     * @return void
+     */
     public function sortItems($group, $orders)
     {
         $items = Item::where('group_id', $group->id)->findMany($orders);
@@ -239,34 +352,55 @@ class Handler
         }
     }
 
+    /**
+     * get items
+     *
+     * @param Group    $group       group
+     * @param null|int $count       get count
+     * @param bool     $onlyVisible only visible
+     *
+     * @return mixed
+     */
     public function getItems($group, $count = null, $onlyVisible = false)
     {
         $query = Item::where('group_id', $group->id);
 
         if ($onlyVisible) {
             $query->where('status', 'show')
-            ->where(function ($query) {
-                $query->where('use_timer', 0)
-                ->orWhere(function($query) {
-                    $now = Carbon::now();
-                    $query->where('ended_at', '>', $now);
-                    $query->where('started_at', '<', $now);
+                ->where(function ($query) {
+                    $query->where('use_timer', 0)
+                        ->orWhere(function ($query) {
+                            $now = Carbon::now();
+                            $query->where('ended_at', '>', $now);
+                            $query->where('started_at', '<', $now);
+                        });
                 });
-            });
         }
 
         if ($count !== null) {
             $query->take($count);
         }
 
-        return $query->orderBy('order', 'desc')->orderBy('created_at','desc')->get();
+        return $query->orderBy('order', 'desc')->orderBy('created_at', 'desc')->get();
     }
 
+    /**
+     * set resizeable
+     *
+     * @param bool $bool set resizable
+     *
+     * @return void
+     */
     public static function setResizable($bool = true)
     {
         static::$resizable = $bool;
     }
 
+    /**
+     * get is resizable
+     *
+     * @return bool
+     */
     public static function isResizable()
     {
         return static::$resizable;
