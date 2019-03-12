@@ -42,6 +42,9 @@ $.fn.extend({
       oldItem.before(newItem)
       oldItem.remove()
       selectItem(newItem.data('id'))
+      if(data.alert){
+        XE.toast('success',data.alert.message)
+      }
     }
     this.reorder = function () {
       var orders = ui.itemList.sortable('toArray', {attribute: 'data-id'})
