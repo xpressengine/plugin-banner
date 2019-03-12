@@ -41,8 +41,8 @@ class Item extends DynamicModel
         'order' => 'integer',
         'image' => 'array',
         'use_timer' => 'boolean',
-        'started_at' => 'date',
-        'ended_at' => 'date',
+        'started_at' => 'datetime',
+        'ended_at' => 'datetime',
         'etc' => 'array'
     ];
 
