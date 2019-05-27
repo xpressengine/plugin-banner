@@ -18,6 +18,7 @@ namespace Xpressengine\Plugins\Banner\Models;
 
 use Carbon\Carbon;
 use Xpressengine\Database\Eloquent\DynamicModel;
+use Xpressengine\Media\Models\Image;
 
 /**
  * Item
@@ -77,9 +78,11 @@ class Item extends DynamicModel
      */
     public function imageUrl()
     {
-        $path = array_get($this->image, 'path');
-        if ($path) {
-            return asset($path);
+        $id = array_get($this->image, 'id');
+        $image = Image::find($id);
+
+        if ($image) {
+            return $image->url();
         } else {
             return asset('assets/core/common/img/default_image_1200x800.jpg');
         }
