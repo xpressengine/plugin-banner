@@ -1,6 +1,6 @@
 {
     "name": "xpressengine-plugin/banner",
-    "description": "This Package is Xpressengine Plugin - Banner.",
+    "description": "배너 기능 제공 플러그인 입니다.",
     "keywords": [
         "xpressengine",
         "plugin",
@@ -17,7 +17,7 @@
         {
             "name": "XE Developers",
             "email": "developers@xpressengine.com",
-            "homepage": "http://xpressengine.io",
+            "homepage": "https://store.xehub.io/plugins/banner",
             "role": "Developer"
         }
     ],
