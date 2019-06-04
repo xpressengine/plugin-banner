@@ -8,7 +8,7 @@
         "widget"
     ],
     "license": "LGPL-2.1",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "type": "xpressengine-plugin",
     "support": {
         "email": "developers@xpressengine.com"
@@ -38,7 +38,9 @@
             }
         }
     },
-    "require": {},
+    "require": {
+        "xpressengine/xpressengine": "~3.0.2"
+    },
     "autoload": {
         "psr-4": {
             "Xpressengine\\Plugins\\Banner\\": "src/"
