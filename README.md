@@ -1,3 +1,8 @@
+
+<p align="center"> 
+  <img src="./icon.png">
+ </p>
+
 # plugin-banner
 이 어플리케이션은 Xpressengine3(이하 XE3)의 플러그인 입니다.
 
