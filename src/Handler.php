@@ -113,6 +113,16 @@ class Handler
     }
 
     /**
+     * get groups by skin
+     *
+     * @return mixed
+     */
+    public function getGroupsBySkin($skin)
+    {
+        return Group::where('skin', $skin)->get();
+    }
+
+    /**
      * create item
      *
      * @param Group $group group model
