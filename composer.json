@@ -1,52 +1,53 @@
 {
-    "name": "xpressengine-plugin/banner",
-    "description": "배너 기능 제공 플러그인 입니다.",
-    "keywords": [
-        "xpressengine",
-        "plugin",
-        "banner",
-        "widget"
-    ],
-    "license": "LGPL-3.0-or-later",
-    "version": "1.0.3",
-    "type": "xpressengine-plugin",
-    "support": {
-        "email": "developers@xpressengine.com"
-    },
-    "authors": [
-        {
-            "name": "XE Developers",
-            "email": "developers@xpressengine.com",
-            "homepage": "https://store.xehub.io/plugins/banner",
-            "role": "Developer"
-        }
-    ],
-    "extra": {
-        "xpressengine": {
-            "title": "Banner",
-            "component": {
-                "widget/banner@widget": {
-                    "class": "\\Xpressengine\\Plugins\\Banner\\Widgets\\Widget",
-                    "name": "배너 위젯",
-                    "description": "편하고 자유롭게 배너를 편집할 수 있고, 편집한 배너를 위젯으로 어디든 출력할 수 있습니다. 또 원하는 시간을 지정하여 출력할 수 있습니다."
-                },
-                "widget/banner@widget/skin/banner@widgetskin": {
-                    "class": "Xpressengine\\Plugins\\Banner\\Skins\\WidgetSkin",
-                    "name": "Banner 기본 위젯 스킨",
-                    "description": "The Skin supported by Banner plugin."
-                }
-            }
-        }
-    },
-    "require": {
-        "xpressengine/xpressengine": "~3.0.2"
-    },
-    "autoload": {
-        "psr-4": {
-            "Xpressengine\\Plugins\\Banner\\": "src/"
-        },
-        "classmap": [
-            "skins/widget/WidgetSkin.php"
-        ]
+  "name": "xpressengine-plugin/banner",
+  "description": "배너 기능 제공 플러그인 입니다.",
+  "keywords": [
+    "xpressengine",
+    "plugin",
+    "banner",
+    "widget"
+  ],
+  "license": "LGPL-3.0-or-later",
+  "version": "1.0.4",
+  "type": "xpressengine-plugin",
+  "support": {
+    "email": "developers@xpressengine.com"
+  },
+  "authors": [
+    {
+      "name": "XE Developers",
+      "email": "developers@xpressengine.com",
+      "homepage": "https://store.xehub.io/plugins/banner",
+      "role": "Developer"
     }
+  ],
+  "extra": {
+    "xpressengine": {
+      "title": "Banner",
+      "icon": "icon.png",
+      "component": {
+        "widget/banner@widget": {
+          "class": "\\Xpressengine\\Plugins\\Banner\\Widgets\\Widget",
+          "name": "배너 위젯",
+          "description": "편하고 자유롭게 배너를 편집할 수 있고, 편집한 배너를 위젯으로 어디든 출력할 수 있습니다. 또 원하는 시간을 지정하여 출력할 수 있습니다."
+        },
+        "widget/banner@widget/skin/banner@widgetskin": {
+          "class": "Xpressengine\\Plugins\\Banner\\Skins\\WidgetSkin",
+          "name": "Banner 기본 위젯 스킨",
+          "description": "The Skin supported by Banner plugin."
+        }
+      }
+    }
+  },
+  "require": {
+    "xpressengine/xpressengine": "~3.0.9"
+  },
+  "autoload": {
+    "psr-4": {
+      "Xpressengine\\Plugins\\Banner\\": "src/"
+    },
+    "classmap": [
+      "skins/widget/WidgetSkin.php"
+    ]
+  }
 }

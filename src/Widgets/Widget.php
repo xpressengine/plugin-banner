@@ -38,11 +38,13 @@ class Widget extends AbstractWidget
      */
     public function render()
     {
+        $widgetConfig = $this->setting();
+
         $setting = $this->setting();
+        $title = $setting['@attributes']['title'];
         $group_id = array_get($setting, 'group_id');
 
         $group = app('xe.banner')->getGroup($group_id);
-
         if ($group == null) {
             return '';
         }
@@ -56,7 +58,8 @@ class Widget extends AbstractWidget
             // 경우에 따라 버튼의 스타일이 다르게 표현되어 디자인이 깨지는 현상으로 인해 주석처리
 //            $footer = '<div style="position:relative;top:-30px;text-align:right"><a class="xe-btn xe-btn-xs xe-btn-primary-outline" href="'.route('banner::group.edit',['group_id' => $group->id]).'" onclick="window.open(this.href, \'bannerEditor\', \'directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no\');return false">배너편집</a></div>';
         }
-        return $this->renderSkin(compact('group', 'items')) . $footer;
+
+        return $this->renderSkin(compact('title', 'group', 'items', 'widgetConfig')) . $footer;
     }
 
     /**
@@ -68,7 +71,12 @@ class Widget extends AbstractWidget
      */
     public function renderSetting(array $args = [])
     {
-        $groups = app('xe.banner')->getGroups();
+//        $groups = app('xe.banner')->getGroups();
+        $selectedSkinId = app('request')->get('skin');
+        if ($selectedSkinId == '') {
+            $selectedSkinId = array_get($args, '@attributes.skin-id');
+        }
+        $groups = app('xe.banner')->getGroupsBySkin($selectedSkinId);
         return view(Plugin::view('views.widget.setting'), compact('groups', 'args'));
     }
 }

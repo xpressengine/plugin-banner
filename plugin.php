@@ -81,6 +81,7 @@ class Plugin extends AbstractPlugin
                     Route::get('/', [
                         'as' => 'banner::group.index',
                         'uses' => 'GroupController@index',
+                        'settings_menu' => 'contents.banner',
                     ]);
 
                     // 그룹 생성 페이지
@@ -160,6 +161,19 @@ class Plugin extends AbstractPlugin
                 }
             );
         });
+
+        // settings menu 등록
+        $menus = [
+            'contents.banner' => [
+                'title' => '배너',
+                'display' => true,
+                'description' => '',
+                'ordering' => 6000
+            ],
+        ];
+        foreach ($menus as $id => $menu) {
+            app('xe.register')->push('settings/menu', $id, $menu);
+        }
     }
 
     /**
