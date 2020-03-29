@@ -94,11 +94,11 @@ class Handler
         }
 
         if ($group !== null) {
-            $group->delete();
-            $items = Items::where('group_id', $group->id)->get();
-            foreach ($items as $item) {
+            foreach ($group->items as $item) {
                 $this->removeItem($item);
             }
+
+            $group->delete();
         }
     }
 

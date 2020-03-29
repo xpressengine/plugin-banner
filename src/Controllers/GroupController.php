@@ -16,6 +16,7 @@
 
 namespace Xpressengine\Plugins\Banner\Controllers;
 
+use XePresenter;
 use App\Http\Controllers\Controller as Origin;
 use Xpressengine\Http\Request;
 use Xpressengine\Plugins\Banner\Handler;
@@ -179,5 +180,29 @@ class GroupController extends Origin
 
         return redirect()->route('banner::group.index')
             ->with(['alert' => ['type' => 'success', 'message' => '수정되었습니다.']]);
+    }
+
+    /**
+     * destroy
+     *
+     * @param Handler $handler Banner handler
+     * @param string  $groupId Group id
+     *
+     * @return mixed|\Xpressengine\Presenter\Presentable
+     * @throws \Throwable
+     */
+    public function destroy(Handler $handler, $groupId)
+    {
+        \DB::beginTransaction();
+        try {
+            $group = $handler->getGroup($groupId);
+            $handler->removeGroup($group);
+        } catch (\Throwable $e) {
+            \DB::rollback();
+            throw $e;
+        }
+        \DB::commit();
+
+        return XePresenter::makeApi(['success' => true]);
     }
 }

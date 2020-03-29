@@ -29,16 +29,15 @@
                             </thead>
                             <tbody>
                             @foreach($groups as $group)
-                                <tr>
+                                <tr class="__group-item">
                                     <td>{{ $group->title }}</td>
                                     <td>{{ $group->count }}</td>
                                     <td>{{ $group->created_at->format('Y.m.d H:i:s') }}</td>
                                     <td>
-                                        <a class="xe-btn xe-btn-xs xe-btn-default" onclick="window.open(this.href, 'bannerEditor', 'directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no');return false" href="{{ route('banner::group.edit', ['group_id' => $group->id]) }}">편집</a>
-                                        <a class="xe-btn xe-btn-default xe-btn-xs" role="button" data-toggle="collapse" href="#widget-code-{{ $group->id }}">
-                                            위젯코드
-                                        </a>
+                                        <a class="xe-btn xe-btn-xs xe-btn-default" onclick="window.open(this.href, 'bannerEditor', 'directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no');return false" href="{{ route('banner::group.edit', ['group_id' => $group->id]) }}">아이템 관리</a>
+                                        <a class="xe-btn xe-btn-default xe-btn-xs" role="button" data-toggle="collapse" href="#widget-code-{{ $group->id }}">위젯코드</a>
                                         <a class="xe-btn xe-btn-default xe-btn-xs" href="{{ route('banner::group.update', ['group_id' => $group->id]) }}" role="button" data-toggle="xe-page-modal">설정</a>
+                                        <a class="xe-btn xe-btn-danger xe-btn-xs __group-delete-button" data-group-id="{{ $group->id }}" data-delete-url="{{ route('banner::group.delete', ['group_id' => $group->id]) }}">삭제</a>
                                     </td>
                                 </tr>
                                 <tr id="widget-code-{{ $group->id }}" class="collapse">
@@ -55,3 +54,24 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(function () {
+        $('.__group-delete-button').click(function () {
+            if (confirm('배너를 정말로 삭제하시겠습니까?\n사용 중인 배너를 삭제하면 사이트에 문제가 생길 수 있습니다.') === true) {
+                var $this = $(this)
+                var url = $this.data('delete-url')
+                var groupId = $this.data('group-id')
+                
+                XE.delete(url)
+                    .then(function (res) {
+                        if (res.data.success === true) {
+                            $this.closest('.__group-item').remove()
+                            $('#widget-code-' + groupId).remove()
+                            XE.toast('success', '배너 삭제가 완료됐습니다.')
+                        }
+                    })
+            }
+        })
+    })
+</script>

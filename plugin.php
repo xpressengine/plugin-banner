@@ -71,11 +71,10 @@ class Plugin extends AbstractPlugin
      */
     protected function route()
     {
-        Route::settings($this->getId(), function(){
+        Route::settings($this->getId(), function () {
             Route::group(
                 ['prefix' => 'groups', 'namespace' => 'Xpressengine\Plugins\Banner\Controllers'],
-                function() {
-
+                function () {
                     // 그룹리스트 출력
                     // GET settings/banner/groups
                     Route::get('/', [
@@ -100,10 +99,10 @@ class Plugin extends AbstractPlugin
 
                     // 그룹 삭제
                     // DEL settings/banner/groups/GROUP_ID
-                    //Route::delete('{group_id}', [
-                    //    'as' => 'banner::group.delete',
-                    //    'uses' => 'GroupController@destroy'
-                    //]);
+                    Route::delete('{group_id}', [
+                        'as' => 'banner::group.delete',
+                        'uses' => 'GroupController@destroy'
+                    ]);
 
                     // 그룹 수정
                     // GET settings/banner/groups/GROUP_ID
@@ -119,7 +118,6 @@ class Plugin extends AbstractPlugin
 
                     // 편집기 출력(그룹 편집)
                     // GET settings/banner/groups/GROUP_ID/edit
-
                     Route::get('{group_id}/edit', [
                         'as' => 'banner::group.edit',
                         'uses' => 'GroupController@edit'
@@ -128,7 +126,6 @@ class Plugin extends AbstractPlugin
                     Route::group(
                         ['prefix' => '{group_id}/items'],
                         function () {
-
                             // 아이템 생성
                             // POST settings/banner/groups/GROUP_ID/items
                             Route::post('/', [
@@ -298,6 +295,4 @@ class Plugin extends AbstractPlugin
     {
         return route('banner::group.index');
     }
-
-
 }
