@@ -37,7 +37,7 @@
                                         <a class="xe-btn xe-btn-xs xe-btn-default" onclick="window.open(this.href, 'bannerEditor', 'directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no');return false" href="{{ route('banner::group.edit', ['group_id' => $group->id]) }}">아이템 관리</a>
                                         <a class="xe-btn xe-btn-default xe-btn-xs" role="button" data-toggle="collapse" href="#widget-code-{{ $group->id }}">위젯코드</a>
                                         <a class="xe-btn xe-btn-default xe-btn-xs" href="{{ route('banner::group.update', ['group_id' => $group->id]) }}" role="button" data-toggle="xe-page-modal">설정</a>
-                                        <a class="xe-btn xe-btn-danger xe-btn-xs __group-delete-button" data-group-id="{{ $group->id }}" data-delete-url="{{ route('banner::group.delete', ['group_id' => $group->id]) }}">삭제</a>
+                                        <a class="xe-btn xe-btn-danger xe-btn-xs __group-delete-button" data-group-id="{{ $group->id }}" data-delete-url="{{ route('banner::group.delete', ['group_id' => $group->id]) }}" style="color: #ffffff">삭제</a>
                                     </td>
                                 </tr>
                                 <tr id="widget-code-{{ $group->id }}" class="collapse">
