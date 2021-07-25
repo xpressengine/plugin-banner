@@ -19,6 +19,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Route;
 use Schema;
 use Xpressengine\Plugin\AbstractPlugin;
+use Xpressengine\Plugins\Banner\Commands;
 use Xpressengine\Plugins\Banner\Models\Group;
 
 /**
@@ -55,13 +56,13 @@ class Plugin extends AbstractPlugin
      */
     public function boot()
     {
-        // implement code
-
         $this->route();
 
         Group::setSkinResolver(function ($skinId) {
             return XeSkin::get($skinId);
         });
+
+        Commands\SkinMake::boot();
     }
 
     /**
