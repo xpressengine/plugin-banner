@@ -49,9 +49,13 @@ class Widget extends AbstractWidget
             return '';
         }
 
-        $items = app('xe.banner')->getItems($group, $group->getSkinInfo('count'), true);
-
         array_set($this->config, '@attributes.skin-id', $group->skin);
+
+        // 랜덤 (Random)
+        $isRandomActivated = (array_get($widgetConfig, 'random') === 'activated');
+        $items = app('xe.banner')->getItems($group, $group->getSkinInfo('count'), true)->when($isRandomActivated, function($items) {
+            return $items->shuffle();
+        });
 
         $footer = '';
         if (auth()->user()->isAdmin()) {
@@ -77,6 +81,7 @@ class Widget extends AbstractWidget
             $selectedSkinId = array_get($args, '@attributes.skin-id');
         }
         $groups = app('xe.banner')->getGroupsBySkin($selectedSkinId);
+
         return view(Plugin::view('views.widget.setting'), compact('groups', 'args'));
     }
 }
