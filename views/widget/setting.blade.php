@@ -18,8 +18,8 @@
 <div class="form-group">
     <label>랜덤</label>
     <select name="random" class="form-control">
-        <option value="activated" @if(array_get($args, 'activated') == 'activated') selected="selected" @endif >사용</option>
-        <option value="deactivated" @if(array_get($args, 'activated') == 'deactivated') selected="selected" @endif >사용안함</option>
+        <option value="activated" @if(array_get($args, 'random') == 'activated') selected="selected" @endif >사용</option>
+        <option value="deactivated" @if(array_get($args, 'random') == 'deactivated') selected="selected" @endif >사용안함</option>
     </select>
 </div>
 
