@@ -193,6 +193,22 @@ class Plugin extends AbstractPlugin
      */
     public function install()
     {
+        if (!Schema::hasTable('banner_group')) {
+            Schema::create(
+                'banner_group',
+                function (Blueprint $table) {
+                    $table->engine = "InnoDB";
+
+                    $table->string('id', 36)->primary();
+                    $table->string('title')->unique();
+                    $table->string('skin', 1000);
+                    $table->integer('count')->default(0);
+                    $table->timestamp('created_at');
+                    $table->timestamp('updated_at');
+                }
+            );
+        }
+
         if (!Schema::hasTable('banner_item')) {
             Schema::create(
                 'banner_item',
@@ -215,22 +231,7 @@ class Plugin extends AbstractPlugin
                     $table->timestamp('created_at');
                     $table->timestamp('updated_at');
                     $table->index('group_id', 'order');
-                }
-            );
-        }
-
-        if (!Schema::hasTable('banner_group')) {
-            Schema::create(
-                'banner_group',
-                function (Blueprint $table) {
-                    $table->engine = "InnoDB";
-
-                    $table->string('id', 36)->primary();
-                    $table->string('title')->unique();
-                    $table->string('skin', 1000);
-                    $table->integer('count')->default(0);
-                    $table->timestamp('created_at');
-                    $table->timestamp('updated_at');
+                    $table->foreign('group_id')->references('id')->on('banner_group');
                 }
             );
         }
