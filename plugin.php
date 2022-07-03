@@ -199,12 +199,12 @@ class Plugin extends AbstractPlugin
                 function (Blueprint $table) {
                     $table->engine = "InnoDB";
 
-                    $table->string('id', 36)->primary();
-                    $table->string('title')->unique();
-                    $table->string('skin', 1000);
-                    $table->integer('count')->default(0);
-                    $table->timestamp('created_at');
-                    $table->timestamp('updated_at');
+                    $table->string('id', 36)->primary()->comment('ID');
+                    $table->string('title')->unique()->comment('타이틀');
+                    $table->string('skin', 1000)->comment('스킨ID');
+                    $table->integer('count')->default(0)->comment('사용중인 배너 개수');
+                    $table->timestamp('created_at')->comment('작성일자');
+                    $table->timestamp('updated_at')->comment('수정일자');
                 }
             );
         }
@@ -215,21 +215,21 @@ class Plugin extends AbstractPlugin
                 function (Blueprint $table) {
                     $table->engine = "InnoDB";
 
-                    $table->string('id', 36)->primary();
-                    $table->string('group_id', 36);
-                    $table->string('title');
-                    $table->string('content');
-                    $table->string('link', 1000);
-                    $table->string('link_target', 20);
-                    $table->string('image', 1000);
-                    $table->string('status', 100);
-                    $table->integer('order')->default(0);
-                    $table->boolean('use_timer')->default(false);
-                    $table->timestamp('started_at')->nullable();
-                    $table->timestamp('ended_at')->nullable();
-                    $table->text('etc');
-                    $table->timestamp('created_at');
-                    $table->timestamp('updated_at');
+                    $table->string('id', 36)->primary()->comment('ID');
+                    $table->string('group_id', 36)->comment('배너 그룹 ID');
+                    $table->string('title')->comment('타이틀');
+                    $table->string('content')->comment('내용');
+                    $table->string('link', 1000)->comment('URL');
+                    $table->string('link_target', 20)->comment('HTML <a> tag target attribute value');
+                    $table->string('image', 1000)->comment('이미지 정보');
+                    $table->string('status', 100)->comment('상태');
+                    $table->integer('order')->default(0)->comment('정렬');
+                    $table->boolean('use_timer')->default(false)->comment('타이머 사용');
+                    $table->timestamp('started_at')->nullable()->comment('시작일자');
+                    $table->timestamp('ended_at')->nullable()->comment('종료일자');
+                    $table->text('etc')->comment('기타 설정');
+                    $table->timestamp('created_at')->comment('작성일자');
+                    $table->timestamp('updated_at')->comment('수정일자');
                     $table->index('group_id', 'order');
                     $table->foreign('group_id')->references('id')->on('banner_group');
                 }
