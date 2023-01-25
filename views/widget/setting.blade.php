@@ -15,6 +15,14 @@
     </div>
 </div>
 
+<div class="form-group">
+    <label>랜덤</label>
+    <select name="random" class="form-control">
+        <option value="activated" @if(array_get($args, 'random') == 'activated') selected="selected" @endif >사용</option>
+        <option value="deactivated" @if(array_get($args, 'random') == 'deactivated') selected="selected" @endif >사용안함</option>
+    </select>
+</div>
+
 <script>
     $(function () {
         $('.__xe_widget_banner_select_group').on('change', function (e) {

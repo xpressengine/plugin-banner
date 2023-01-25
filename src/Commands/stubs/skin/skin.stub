@@ -1,0 +1,16 @@
+<?php
+
+namespace DummyNamespace;
+
+use Xpressengine\Plugins\Banner\BannerWidgetSkin;
+
+class DummyClass extends BannerWidgetSkin
+{
+    protected static $path = 'DummyPluginId/DummySkinDirname';
+
+    public function render()
+    {
+        app('xe.frontend')->css('assets/vendor/bootstrap/css/bootstrap.min.css')->load();
+        return parent::render();
+    }
+}

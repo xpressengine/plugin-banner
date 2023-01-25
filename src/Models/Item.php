@@ -50,6 +50,13 @@ class Item extends DynamicModel
     protected $fillable = ['order'];
 
     /**
+     * The "type" of the primary key ID.
+     *
+     * @var string
+     */
+    protected $keyType = 'string';
+
+    /**
      * group
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

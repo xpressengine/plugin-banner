@@ -38,6 +38,13 @@ class Group extends DynamicModel
 
     public $timestamps = true;
 
+    /**
+     * The "type" of the primary key ID.
+     *
+     * @var string
+     */
+    protected $keyType = 'string';
+
     protected static $skinResolver;
 
     /**
